@@ -6,4 +6,5 @@ export interface IAdmin {
 
 export default interface ILoginRepository {
   logIn(email: string): Promise<IAdmin>;
+  newHash(email:string, hash: string): Promise<void>;
 }

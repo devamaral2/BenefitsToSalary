@@ -1,9 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-// import OtherModel from './OtherModel';
 
-class User extends Model {
-  // public <campo>!: <tipo>;
+class Admin extends Model {
   public id: number;
   public username: string;
   public role: string;
@@ -11,22 +9,15 @@ class User extends Model {
   public password: string;
 }
 
-User.init({
+Admin.init({
   id: {
     primaryKey: true,
     autoIncrement: true,
     type: DataTypes.INTEGER,
   },
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  role: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   email: {
     type: DataTypes.STRING,
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -39,4 +30,4 @@ User.init({
   timestamps: false,
 });
 
-export default User;
+export default Admin;

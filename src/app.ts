@@ -1,4 +1,5 @@
 import * as express from 'express';
+import errorMiddleware from './middlewares/errorMiddleware';
 import * as Routes from './routes';
 
 class App {
@@ -21,13 +22,14 @@ class App {
       res.header('Access-Control-Allow-Headers', '*');
       next();
     };
-    this.app.use(express.json());
     this.app.use(accessControl);
   }
 
   private routes(): void {
-    this.app.use(Routes.login);
-    // this.app.use(Routes.benefits);
+    this.app.use(express.json());
+    this.app.use('/login', Routes.login);
+    this.app.use('/benefits', Routes.benefits);
+    this.app.use(errorMiddleware);
   }
 
   public start(PORT: string | number):void {
