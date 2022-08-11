@@ -3,6 +3,8 @@ import IAccountRepository, { IAccount } from '../interfaces/IAccountRepository';
 import IBenefitRepository from '../interfaces/IBenefitRepository';
 import IAccountBenefitRepository from '../interfaces/IAccountBenefitRepository';
 import { noExistentEntity } from '../utils/errorsList';
+import stringToNumber from '../utils/stringToNumber';
+import numberToString from '../utils/numberToString';
 
 export default class BenefitService implements IBenefitService {
   private account: any;
@@ -18,15 +20,10 @@ export default class BenefitService implements IBenefitService {
     this.accountBenefitRepository = accountBenefitRepository;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  stringToNumber(str: string) {
-    return Number(str.split('').splice(2, 15).join(''));
-  }
-
   calcDeduction() {
-    const salary = this.stringToNumber(this.account.salary);
-    const value = this.stringToNumber(this.benefit.value);
-    const newSalary = `R$${((salary - value).toFixed(2)).toString()}`;
+    const salary = stringToNumber(this.account.salary);
+    const value = stringToNumber(this.benefit.value);
+    const newSalary = numberToString(salary, value);
     return newSalary;
   }
 
@@ -41,8 +38,9 @@ export default class BenefitService implements IBenefitService {
     this.benefit = await this.benefitRepository.getBenefit(benefitId);
     this.checkIfEntitiesExist();
     const newSalary = this.calcDeduction();
-    console.log(newSalary);
     await this.accountRepository.deductingFromSalary(this.account.id, newSalary);
+    this.accountBenefitRepository.add(this.account.id, this.benefit.id);
+    this.account = await this.accountRepository.getAccount(id);
     return this.account;
   }
 }
