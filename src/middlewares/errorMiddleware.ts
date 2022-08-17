@@ -21,6 +21,10 @@ const errorsCatalog: any = {
     status: 400,
     messange: 'O token não é válido',
   },
+  invalidSecret: {
+    status: 400,
+    messange: 'O secret não é válido',
+  },
 };
 
 const errorMiddleware = (err: Error, _req: Request, res: Response, _next: NextFunction) => {

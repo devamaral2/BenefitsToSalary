@@ -5,7 +5,7 @@ import checkJwt from '../middlewares/checkJwt';
 
 const routes = express.Router();
 
-routes.patch(
+routes.post(
   '/add/:id',
   checkJwt,
   (req, res, next) => benefitFactory().add(req, res, next),

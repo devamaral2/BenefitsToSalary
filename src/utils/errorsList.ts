@@ -7,3 +7,5 @@ export const emailOrPasswordFormat = new Error('emailOrPasswordFormat');
 export const noExistentEntity = new Error('noExistentEntity');
 
 export const invalidToken = new Error('invalidToken');
+
+export const invalidSecret = new Error('invalidSecret');
